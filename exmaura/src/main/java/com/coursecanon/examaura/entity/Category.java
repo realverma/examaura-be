@@ -43,7 +43,7 @@ public class Category {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "icon", length = 50)
+    @Column(name = "icon", length = 200)
     private String icon;
 
     @Column(name = "color", length = 20)

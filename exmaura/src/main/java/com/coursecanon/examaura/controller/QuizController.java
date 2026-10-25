@@ -37,6 +37,7 @@ public class QuizController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(required = false) UUID category,
+            @RequestParam(required = false) String categorySlug,
             @RequestParam(required = false) String difficulty,
             @RequestParam(required = false) String search,
             @RequestParam(required = false, defaultValue = "createdAt") String sort,
@@ -44,7 +45,7 @@ public class QuizController {
         Sort sorting=order.equalsIgnoreCase("ASC") ? Sort.by(sort).ascending() : Sort.by(sort).descending();
 
         Pageable pageable= PageRequest.of(page, size, sorting);
-        PaginatedResponse<QuizResponseDto> response=quizService.findAllQuizzes(category, difficulty, search, pageable);
+        PaginatedResponse<QuizResponseDto> response=quizService.findAllQuizzes(category,categorySlug, difficulty, search, pageable);
 
         return ResponseEntity.ok(response);
     }

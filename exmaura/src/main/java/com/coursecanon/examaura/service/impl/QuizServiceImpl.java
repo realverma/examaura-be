@@ -40,14 +40,14 @@ public class QuizServiceImpl implements QuizService {
     private final UserRepository userRepository;
     private final QuestionMapper questionMapper;
 
-    public PaginatedResponse<QuizResponseDto> findAllQuizzes(UUID categoryId, String difficulty, String search, Pageable pageable){
-        Specification<Quiz> spec= QuizSpecifications.filterQuizzes(categoryId, difficulty, search);
+    public PaginatedResponse<QuizResponseDto> findAllQuizzes(UUID categoryId, String categorySlug, String difficulty, String search, Pageable pageable){
+        Specification<Quiz> spec= QuizSpecifications.filterQuizzes(categoryId, categorySlug, difficulty, search);
         Page<Quiz> quizPage=quizRepository.findAll(spec, pageable);
 
         //convert Page entity chunks to response DTO wrappers
         Page<QuizResponseDto> dtoPage=quizPage.map(quizMapper::toResponse);
 
-        //Hide questions array from Heavey listing queries to save database execution cost an bandwidth
+        //Hide questions array from Heavy listing queries to save database execution cost an bandwidth
         dtoPage.forEach(quiz-> quiz.setQuestions(new ArrayList<>()));
         return PaginatedResponse.fromPage(dtoPage);
     }

@@ -16,13 +16,21 @@ import java.util.UUID;
 // like this public interface QuizRepository extends JpaRepository<Quiz, UUID>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<Quiz>
 
 public class QuizSpecifications {
-    public static Specification<Quiz> filterQuizzes(UUID categoryId, String difficulty, String search){
+    public static Specification<Quiz> filterQuizzes(UUID categoryId, String categorySlug, String difficulty, String search){
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates=new ArrayList<>();
 
             //Always enforce showing only published quizzes to standard users
             if (categoryId != null){
                 predicates.add(criteriaBuilder.equal(root.get("category").get("id"), categoryId));
+            }
+
+            // 2. Filter by category slug (String, case-insensitive) if provided
+            if (categorySlug != null && !categorySlug.isBlank()) {
+                predicates.add(criteriaBuilder.equal(
+                        criteriaBuilder.lower(root.get("category").get("slug")),
+                        categorySlug.toLowerCase().trim()
+                ));
             }
 
             if (difficulty != null && !difficulty.isBlank()){

@@ -1,6 +1,8 @@
 package com.coursecanon.examaura.repository;
 
 import com.coursecanon.examaura.entity.Quiz;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +34,5 @@ public interface QuizRepository extends JpaRepository<Quiz, UUID>, org.springfra
 
     // 🚀 NEW: Fetch top 10 latest quizzes created by specific user
     List<Quiz> findTop10ByCreatorIdOrderByCreatedAtDesc(UUID creatorId);
+
 }

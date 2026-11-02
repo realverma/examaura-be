@@ -22,6 +22,9 @@ public class QuizAttemptMapper {
 
         if (attempt.getMode() != null) dto.setMode(attempt.getMode().name());
 
+        assert attempt.getQuiz() != null;
+        dto.setQuizName(attempt.getQuiz().getTitle());
+        dto.setQuizCategory(attempt.getQuiz().getCategory().getName());
         dto.setScore(attempt.getScore());
         dto.setTotalQuestions(attempt.getTotalQuestions());
         dto.setCorrectAnswers(attempt.getCorrectAnswers());

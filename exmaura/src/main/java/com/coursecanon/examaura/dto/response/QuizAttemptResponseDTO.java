@@ -13,6 +13,8 @@ public class QuizAttemptResponseDTO {
     private UUID id;
     private UUID quizId;
     private UUID userId;
+    private String quizName;
+    private String quizCategory;
     private String mode;
     private BigDecimal score;
     private BigDecimal passedScore;
